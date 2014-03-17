@@ -14,7 +14,7 @@ public class ConcordanceTest {
 
     @Test(groups = "integration")
     public void givenPathToText_shouldBuildCondordanceWhichMaps_WordSimple_To_LineSix() throws Exception {
-        Concordance condorance = new Concordance("/dojo/concordance/concordance_test.txt");
-        assertThat(condorance.occurancesOf(word("simple")), contains(line(6)));
+        Concordance concordance = new Concordance("/dojo/concordance/concordance_test.txt");
+        assertThat(concordance.occurancesOf(word("simple")), contains(line(6)));
     }
 }
