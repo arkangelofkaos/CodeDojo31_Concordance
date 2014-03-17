@@ -4,7 +4,13 @@ package dojo.concordance;
  * @author arkangelofkaos
  */
 public class Line {
-    public Line(long lineNumber) {
+    private final long lineNumber;
 
+    private Line(long lineNumber) {
+        this.lineNumber = lineNumber;
+    }
+
+    public static Line line(long lineNumber) {
+        return new Line(lineNumber);
     }
 }

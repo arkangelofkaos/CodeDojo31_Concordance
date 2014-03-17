@@ -1,5 +1,6 @@
 package dojo;
 
+import dojo.concordance.Word;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;

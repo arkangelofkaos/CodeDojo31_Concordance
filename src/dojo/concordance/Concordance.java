@@ -8,7 +8,7 @@ public class Concordance {
 
     }
 
-    public Occurances occurancesFor(String word) {
+    public Occurances occurancesOf(Word word) {
         return null;
     }
 }

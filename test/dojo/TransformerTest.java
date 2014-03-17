@@ -1,11 +1,12 @@
 package dojo;
 
+import dojo.concordance.Word;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Set;
 
-import static dojo.Word.wordFor;
+import static dojo.concordance.Word.word;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
@@ -24,13 +25,13 @@ public class TransformerTest {
 
     @Test
     public void givenFooReturnsSetWithFoo() throws Exception {
-        assertThat(transformer.convert(FOO), contains(wordFor(FOO)));
+        assertThat(transformer.convert(FOO), contains(word(FOO)));
     }
 
     @Test
     public void givenFooBarReturnsSetWithBar() throws Exception {
         Set<Word> convert = transformer.convert("foo bar");
-        assertThat(convert, contains(wordFor(FOO), wordFor("bar")));
+        assertThat(convert, contains(word(FOO), word("bar")));
     }
 
 }

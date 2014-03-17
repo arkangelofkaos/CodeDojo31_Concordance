@@ -1,4 +1,4 @@
-package dojo;
+package dojo.concordance;
 
 /**
  * @author arkangelofkaos
@@ -11,11 +11,7 @@ public final class Word implements Comparable<Word> {
         this.value = value;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public static Word wordFor(String value) {
+    public static Word word(String value) {
         return new Word(value);
     }
 

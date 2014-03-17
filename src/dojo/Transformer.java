@@ -1,5 +1,7 @@
 package dojo;
 
+import dojo.concordance.Word;
+
 import java.util.HashSet;
 import java.util.Set;
 
