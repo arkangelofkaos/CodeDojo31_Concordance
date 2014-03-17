@@ -1,0 +1,7 @@
+This is an example sentence, with some words.
+This is another example sentence, with more words.
+Here are more words on another example sentence.
+Short sentence.
+Long long long long long long long
+Simple sentence.
+End of file.
