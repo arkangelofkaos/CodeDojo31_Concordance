@@ -14,9 +14,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class FileReaderTest {
 
     @Test(groups = "unit")
-    public void readingConcordanceFile_returnsSixLines() throws Exception {
+    public void readingConcordanceFile_returnsSevenLines() throws Exception {
         FileReader fileReader = new FileReader();
-        List<Line> lines = fileReader.read("/concordance_test.txt");
-        assertThat(lines.size(), is(6));
+        String concordanceFile = Thread.currentThread().getContextClassLoader()
+                                       .getResource("concordance_test.txt").getPath();
+        List<Line> lines = fileReader.read(concordanceFile);
+        assertThat(lines.size(), is(7));
     }
 }
