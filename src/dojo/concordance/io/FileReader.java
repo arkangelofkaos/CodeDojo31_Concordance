@@ -2,7 +2,6 @@ package dojo.concordance.io;
 
 import dojo.concordance.Line;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,14 +15,19 @@ import static java.util.stream.Collectors.toList;
  */
 public class FileReader {
 
-    public List<Line> read(String absolutePath) {
+    private String getAbsolutePathForFile(String fileName) {
+        return Thread.currentThread().getContextClassLoader()
+                     .getResource(fileName).getPath();
+    }
+
+    public List<Line> read(String fileName) throws FileReadingException {
         try {
             AtomicInteger lineNumber = new AtomicInteger(1);
-            return Files.lines(Paths.get(absolutePath), Charset.defaultCharset())
+            return Files.lines(Paths.get(getAbsolutePathForFile(fileName)), Charset.defaultCharset())
                         .map(lineText -> new Line(lineNumber.getAndIncrement(), lineText))
                         .collect(toList());
-        } catch (IOException e) {
-            return null; // todo - handle this properly
+        } catch (Exception e) {
+            throw new FileReadingException("Could not read file: " + fileName, e);
         }
     }
 
