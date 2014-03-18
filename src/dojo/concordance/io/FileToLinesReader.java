@@ -13,14 +13,14 @@ import static java.util.stream.Collectors.toList;
 /**
  * @author arkangelofkaos
  */
-public class FileReader {
+public class FileToLinesReader {
 
-    private String getAbsolutePathForFile(String fileName) {
+    private static String getAbsolutePathForFile(String fileName) {
         return Thread.currentThread().getContextClassLoader()
                      .getResource(fileName).getPath();
     }
 
-    public List<Line> read(String fileName) throws FileReadingException {
+    public static List<Line> readLinesFromFile(String fileName) throws FileReadingException {
         try {
             AtomicInteger lineNumber = new AtomicInteger(1);
             return Files.lines(Paths.get(getAbsolutePathForFile(fileName)), Charset.defaultCharset())
