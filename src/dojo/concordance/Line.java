@@ -3,7 +3,7 @@ package dojo.concordance;
 /**
  * @author arkangelofkaos
  */
-public final class Line {
+public final class Line implements Comparable<Line> {
     private final long number;
     private final String text;
 
@@ -12,12 +12,8 @@ public final class Line {
         this.text = text;
     }
 
-    @Override
-    public String toString() {
-        return "Line{" +
-                "number=" + number +
-                ", text='" + text + '\'' +
-                '}';
+    public String getText() {
+        return text;
     }
 
     @Override
@@ -38,5 +34,19 @@ public final class Line {
         int result = (int) (number ^ (number >>> 32));
         result = 31 * result + text.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Line{" +
+                "number=" + number +
+                ", text='" + text + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Line o) {
+        int compare = Long.compare(number, o.number);
+        return compare != 0 ? compare : text.compareTo(o.toString());
     }
 }

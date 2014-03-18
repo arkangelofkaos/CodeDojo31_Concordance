@@ -15,19 +15,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class FileToLinesReaderTest {
 
-    @Test(groups = "unit")
+    @Test
     public void readingConcordanceFile_returnsSevenLines() throws Exception {
         List<Line> lines = readLinesFromFile("concordance_test.txt");
         assertThat(lines.size(), is(7));
     }
 
-    @Test(groups = "unit")
+    @Test
     public void readingConcordanceFile_hasLineSixWithTextSimpleSentence() throws Exception {
         List<Line> lines = readLinesFromFile("concordance_test.txt");
         assertThat(lines, hasItem(new Line(6, "Simple sentence.")));
     }
 
-    @Test(groups = "unit", expectedExceptions = FileReadingException.class)
+    @Test(expectedExceptions = FileReadingException.class)
     public void readingNonExistentConcordanceFile_throwsMissingFileException() throws Exception {
         readLinesFromFile("nonExistentFile.foo");
     }

@@ -3,17 +3,19 @@ package dojo.concordance;
 import org.testng.annotations.Test;
 
 import static dojo.concordance.Word.word;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 
 /**
  * @author arkangelofkaos
  */
 public class ConcordanceTest {
 
-    @Test(groups = "integration")
+    @Test
     public void givenPathToText_shouldBuildCondordanceWhichMaps_WordSimple_To_LineSix() throws Exception {
         Concordance concordance = new Concordance("concordance_test.txt");
-        assertThat(concordance.occurancesOf(word("simple")), contains(new Line(6, "Simple sentence.")));
+        assertThat(concordance.occurancesOf(word("simple")).lines().anyMatch(
+                new Line(6, "Simple sentence.")::equals
+        ), is(true));
     }
 }

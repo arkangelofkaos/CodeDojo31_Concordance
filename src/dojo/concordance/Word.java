@@ -7,12 +7,21 @@ public final class Word implements Comparable<Word> {
 
     private final String value;
 
-    public Word(String value) {
+    private Word(String value) {
         this.value = value;
     }
 
+    /**
+     * @param value Raw string value
+     * @return Word wrapping the sanitized String
+     */
     public static Word word(String value) {
-        return new Word(value);
+        String sanitizedString = value.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+        return new Word(sanitizedString);
+    }
+
+    public String getValue() {
+        return value;
     }
 
     @Override
@@ -31,5 +40,12 @@ public final class Word implements Comparable<Word> {
     @Override
     public int compareTo(Word o) {
         return this.value.compareTo(o.value);
+    }
+
+    @Override
+    public String toString() {
+        return "Word{" +
+                "value='" + value + '\'' +
+                '}';
     }
 }
