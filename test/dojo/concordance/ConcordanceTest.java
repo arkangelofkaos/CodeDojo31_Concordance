@@ -12,10 +12,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ConcordanceTest {
 
     @Test
-    public void givenPathToText_shouldBuildCondordanceWhichMaps_WordSimple_To_LineSix() throws Exception {
+    public void givenTextFile_shouldBuildCondordanceWithOccuranceOf_simple_On_LineSix() throws Exception {
         Concordance concordance = new Concordance("concordance_test.txt");
         assertThat(concordance.occurancesOf(word("simple")).lines().anyMatch(
                 new Line(6, "Simple sentence.")::equals
         ), is(true));
+    }
+
+    @Test
+    public void givenMagnaCarta_shouldBuildCondordanceWithTwelveOccurancesOf_lands() throws Exception {
+        Concordance concordance = new Concordance("magna_carta.txt");
+        assertThat(concordance.occurancesOf(word("lands")).lines().count(), is(12L));
     }
 }
