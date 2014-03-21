@@ -20,6 +20,12 @@ public class ConcordanceTest {
     }
 
     @Test
+    public void givenTextField_shouldBuildConcordanceWithoutOccuranceOf_missingWord() throws Exception {
+        Concordance concordance = new Concordance("concordance_test.txt");
+        assertThat(concordance.occurancesOf(word("missingWord")).lines().count(), is(0L));
+    }
+
+    @Test
     public void givenMagnaCarta_shouldBuildCondordanceWithTwelveOccurancesOf_lands() throws Exception {
         Concordance concordance = new Concordance("magna_carta.txt");
         assertThat(concordance.occurancesOf(word("lands")).lines().count(), is(12L));
