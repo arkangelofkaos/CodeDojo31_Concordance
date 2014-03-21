@@ -36,7 +36,10 @@ public class Occurances {
     }
 
     public static Occurances merge(Occurances o1, Occurances o2) {
-        if (!o1.equals(o2) && o1.word.equals(o1.word)) {
+        if (o1 == null) {
+            return o2;
+        }
+        if (o2 != null && !o1.equals(o2) && o1.word.equals(o2.word)) {
             o1.lines.addAll(o2.lines);
         }
         return o1;

@@ -2,15 +2,13 @@ package dojo.concordance;
 
 import dojo.concordance.io.FileReadingException;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 import static dojo.concordance.io.FileToLinesReader.readLinesFromFile;
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.reducing;
 
 /**
  * @author arkangelofkaos
@@ -32,12 +30,7 @@ public class Concordance {
     }
 
     private Collector<Occurances, ?, Map<Word, Occurances>> occurancesByWord() {
-        return groupingBy(Occurances::getWord,
-                          collectingAndThen(toList(), this::mergeOccurances));
-    }
-
-    private Occurances mergeOccurances(List<Occurances> list) {
-        return list.stream().reduce(Occurances::merge).get();
+        return groupingBy(Occurances::getWord, reducing(null, Occurances::merge));
     }
 
     public Occurances occurancesOf(Word word) {
