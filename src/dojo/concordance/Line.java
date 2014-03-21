@@ -1,9 +1,14 @@
 package dojo.concordance;
 
+import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
+
 /**
  * @author arkangelofkaos
  */
 public final class Line implements Comparable<Line> {
+    private static final String WHITESPACE = "\\s";
     private final long number;
     private final String text;
 
@@ -12,8 +17,8 @@ public final class Line implements Comparable<Line> {
         this.text = text;
     }
 
-    public String getText() {
-        return text;
+    public Stream<Word> words() {
+        return asList(text.split(WHITESPACE)).stream().map(Word::word);
     }
 
     @Override

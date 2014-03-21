@@ -4,9 +4,11 @@ import dojo.concordance.io.FileReadingException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
 
 import static dojo.concordance.io.FileToLinesReader.readLinesFromFile;
-import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
@@ -15,28 +17,30 @@ import static java.util.stream.Collectors.toList;
  */
 public class Concordance {
 
-    private static final List<Occurances> EMPTY_LIST = asList();
-
-    private final Map<Word, List<Occurances>> wordToOccurranceMap;
+    private final Map<Word, Occurances> wordToOccurranceMap;
 
     public Concordance(String fileName) throws FileReadingException {
-        this.wordToOccurranceMap = readLinesFromFile(fileName).stream()
-                .flatMap(line -> toOccurances(line).stream())
-                .collect(groupingBy(Occurances::getWord));
+        this.wordToOccurranceMap =
+                readLinesFromFile(fileName)
+                        .stream()
+                        .flatMap(line -> toOccurances(line))
+                        .collect(occurancesByWord());
     }
 
-    private List<Occurances> toOccurances(Line line) {
-        return asList(line.getText().split(" ")).stream()
-                .map(Word::word)
-                .distinct()
-                .map(word -> new Occurances(word, line))
-                .collect(toList());
+    private Stream<Occurances> toOccurances(Line line) {
+        return line.words().distinct().map(word -> new Occurances(word, line));
+    }
+
+    private Collector<Occurances, ?, Map<Word, Occurances>> occurancesByWord() {
+        return groupingBy(Occurances::getWord,
+                          collectingAndThen(toList(), this::mergeOccurances));
+    }
+
+    private Occurances mergeOccurances(List<Occurances> list) {
+        return list.stream().reduce(Occurances::merge).get();
     }
 
     public Occurances occurancesOf(Word word) {
-        return wordToOccurranceMap.getOrDefault(word, EMPTY_LIST)
-                                  .stream()
-                                  .reduce(Occurances::merge)
-                                  .orElseGet(() -> new Occurances(word));
+        return wordToOccurranceMap.getOrDefault(word, new Occurances(word));
     }
 }

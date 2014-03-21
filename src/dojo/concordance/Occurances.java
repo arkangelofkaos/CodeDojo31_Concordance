@@ -27,18 +27,18 @@ public class Occurances {
         return lines.stream();
     }
 
-    public Occurances merge(Occurances otherOccurances) {
-        if (!this.equals(otherOccurances) && this.word.equals(otherOccurances.word)) {
-            lines.addAll(otherOccurances.lines);
-        }
-        return this;
-    }
-
     @Override
     public String toString() {
         return "Occurances{" +
                 "word=" + word +
                 ", lines=" + lines +
                 '}';
+    }
+
+    public static Occurances merge(Occurances o1, Occurances o2) {
+        if (!o1.equals(o2) && o1.word.equals(o1.word)) {
+            o1.lines.addAll(o2.lines);
+        }
+        return o1;
     }
 }
